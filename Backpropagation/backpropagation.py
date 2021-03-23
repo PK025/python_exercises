@@ -1,4 +1,10 @@
 #!/usr/bin/python
+"""
+@author: PK025
+
+Neural network with one hidden layer, trained using backpropagation.
+
+"""
 
 import numpy as np
 
@@ -6,6 +12,22 @@ class BackpropagationNetwork:
     
     
     def __init__(self, input_size, output_size):
+        """
+        This function initializes the network, input and output sizes 
+        cannot be changed later.
+
+        Parameters
+        ----------
+        input_size : int
+            Number of neurons in the input layer
+        output_size : int
+            Number of neurons in the output layer
+
+        Returns
+        -------
+        None
+
+        """
         self.input_size = input_size
         self.output_size = output_size
         
@@ -23,6 +45,22 @@ class BackpropagationNetwork:
         
 
     def train(self, x, t):
+        """
+        Trains the network using backpropagation.
+
+        Parameters
+        ----------
+        x : numpy.array
+            Training data input, expected dimentions (n, input_size)
+        t : numpy.array
+            Training data expected output, expected dimentions (n, output_size)
+
+        Returns
+        -------
+        E : float
+            Mean square error
+
+        """
         if(x.shape[0] != t.shape[0]):
             raise Exception('Arrays have to be equal length')
         
@@ -53,11 +91,24 @@ class BackpropagationNetwork:
             
             E += np.multiply(t[i]-o2, t[i]-o2).sum()
         
-        return E
+        return E/x.shape[0]
             
     
     def predict(self, x):
-    
+        """
+        The network predicts the outputs based on given inputs.
+
+        Parameters
+        ----------
+        x : numpy.array
+            Input, expected dimentions (n, input_size)
+
+        Returns
+        -------
+        y : numpy.array
+            Predicted values, based on the input. dimentions (n, output_size)
+
+        """
         if(x.shape[1]!=self.input_size):
             raise Exception('Input array size does not fit')
             
@@ -76,6 +127,14 @@ class BackpropagationNetwork:
     
     
     def set_mi(self, mi):
+        """
+        The value of mi decides how fast the network will change during training.
+
+        Parameters
+        ----------
+        mi : float
+            New value of mi
+        """
         self.mi = mi
             
 
